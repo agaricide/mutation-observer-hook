@@ -1,18 +1,24 @@
 import React, { useRef, useState } from "react";
+import useMutationObserver from "./lib/useMutationObserver";
 
 function App() {
-  const btnEl = useRef(null);
-  const [btnText, setBtnText] = useState("click me!");
+  const msgEl = useRef(null);
+  const [message, setMessage] = useState();
+
+  useMutationObserver(msgEl, event => {
+    console.log("DOM subtree has changed!", event);
+  });
 
   const handleClick = () => {
-    setBtnText("I was clicked.");
+    setMessage("I was clicked.");
   };
 
   return (
     <div className="App">
-      <button ref={btnEl} onClick={handleClick}>
-        {btnText}
+      <button onClick={handleClick}>
+        click me!
       </button>
+      <div ref={msgEl}>{message}</div>
     </div>
   );
 }
