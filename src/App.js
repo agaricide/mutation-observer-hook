@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useState } from "react";
+import useMutationObserver from "./lib/useMutationObserver";
 
 function App() {
+  const msgEl = useRef(null);
+  const [message, setMessage] = useState();
+
+  useMutationObserver(msgEl, event => {
+    console.log("DOM subtree has changed!", event);
+  });
+
+  const handleClick = () => {
+    setMessage("I was clicked.");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={handleClick}>
+        click me!
+      </button>
+      <div ref={msgEl}>{message}</div>
     </div>
   );
 }
