@@ -15,6 +15,8 @@ function useMutationObserver(ref, callback, options = config) {
       const observer = new MutationObserver(callback);
 
       // Start observing the target node for configured mutations
+      // Difference from Rooks: "ref.current" isn't actually a correct useEffect dependency...
+      // "Mutable values like 'ref.current' aren't valid dependencies because mutating them doesn't re-render the component"
       observer.observe(ref.current, options);
       return () => {
         observer.disconnect();
